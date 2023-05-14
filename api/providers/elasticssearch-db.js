@@ -1,27 +1,18 @@
 const { Client } = require("@elastic/elasticsearch");
-const fs = require("fs");
-const client = new Client({
-  node: "https://localhost:9200",
-  auth: {
-    username: "elastic",
-    password: "LDnu9Yo7RG_*QrLlHM9y",
-  },
-  tls: {
-    ca: fs.readFileSync("./config/http_ca.crt"),
-    rejectUnauthorized: false,
-  },
-});
-
 const { dbPrototype } = require("./database-prototype");
+const { elasticSearchConfig } = require("../config/elasticsearch-config");
+
+const client = new Client(elasticSearchConfig);
 
 const index = process.env.DB_INDEX ? process.env.DB_INDEX : "test";
 const itemsPerPage = process.env.ITEMS_PER_PAGE
   ? process.env.ITEMS_PER_PAGE
   : "5";
 
+//Se utiliza la operacion bulk de ES para insertar todos los datos en una sola peticion
+//Se introduce el indice mediante la funcion onDocument
 const insertData = async (data) => {
-  console.info("Starting ES bulk data to ", index);
-
+  console.debug("Bulk data to ", index);
   const bulkResponse = await client.helpers.bulk({
     datasource: data,
     onDocument(doc) {
@@ -31,22 +22,26 @@ const insertData = async (data) => {
     },
   });
 
-  console.info("Finished ES bulk data to ", index);
   return bulkResponse;
 };
 
+//Se realiza una operacion search sin query para devolver todos los documentos
+//Se indica el numero de elementos a devolver con el size y la pagina con el from
 const getAllDocuments = async (page) => {
+  console.debug("Get all documents in page ", page);
   const result = await client.search({
     index: index,
     size: itemsPerPage,
     from: page,
   });
 
-  console.log(result.hits.hits);
   return result.hits.hits;
 };
 
+//Se realiza una operacion search
+//Si es busqueda por nombre se utiliza fuzzy, sino un match para devolver el documento exacto
 const searchDocuments = async (filter, page) => {
+  console.debug("Search documents by filter ", filter, " in page ", page);
   const searchParams = {
     index: index,
     query: {},
@@ -59,11 +54,13 @@ const searchDocuments = async (filter, page) => {
 
   const result = await client.search(searchParams);
 
-  console.log(result.hits.hits);
   return result.hits.hits;
 };
 
+//Se realiza una operacion search pero con una agregacion
+//Se espera que la query de agregacion ya este formateada
 const aggregateDocuments = async (query) => {
+  console.debug("Aggregate documents to ", query);
   const result = await client.search({
     index: index,
     aggs: {
@@ -74,22 +71,21 @@ const aggregateDocuments = async (query) => {
   return result.aggregations;
 };
 
+//Se realiza una operacion get por el id del documento
 const getDocument = async (id) => {
+  console.debug("Get document ", id);
   const result = await client.get({
     index: index,
     id: id,
   });
 
-  console.log(result);
   return result;
 };
 
+//Se realiza una operacion update por el id del documento
+//Los nuevos datos se envian en el doc
 const updateDocument = async (id, data) => {
-  console.log("updateDocument", {
-    index: index,
-    id: id,
-    doc: data,
-  });
+  console.debug("Update document ", id, " to ", data);
   const result = await client.update({
     index: index,
     id: id,
@@ -99,7 +95,9 @@ const updateDocument = async (id, data) => {
   return result;
 };
 
+//Se realiza una operacion delete por el id del documento
 const deleteDocument = async (id) => {
+  console.debug("Delete document ", id);
   const result = await client.delete({
     index: index,
     id: id,
