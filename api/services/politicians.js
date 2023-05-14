@@ -1,8 +1,6 @@
 const db = require("../db/database-provider");
 
 exports.getPoliticians = async (page, filter) => {
-  console.log("getPoliticians ", filter);
-
   if (filter) {
     //Si se recibe un filtro se realiza una operación de busqueda en la BD
     //Si no se recibe un numero de pagina se indica que sea la pagina inicial (0)
@@ -19,7 +17,6 @@ exports.getPolitician = async (id) => {
 };
 
 exports.patchPolitician = async (id, data) => {
-  console.log("patchPolitician ", id, data);
   //Enviamos el id y los datos que ya están en formato JSON
   return db.updateItem(id, data);
 };

@@ -11,8 +11,6 @@ exports.bulkData = async (data) => {
       index !== 0 && politicianModel.politician(dataItem.split(";"))
   );
 
-  console.log(politicians);
-
   //Enviamos el listado de Politicians a la BD
   await db.insertData(politicians);
 };
