@@ -1,3 +1,4 @@
+//Este prototipo permite variar que base de datos se utiliza sin tener que cambiar el código de los servicios
 exports.dbPrototype = {
   insertData: async (data) => console.log("addDate unimplemented"),
   getAllItems: async (page) => console.log("getAllItems unimplemented"),

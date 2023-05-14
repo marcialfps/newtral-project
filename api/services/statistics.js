@@ -25,11 +25,5 @@ exports.getStatistics = async () => {
   //Enviamos los parametros de agregacion a la BD
   const results = await db.aggregateItems(aggregationParams);
 
-  console.log(results);
-
-  return {
-    average: results.average,
-    median: results.median,
-    top10: results.top10.top,
-  };
+  return results;
 };

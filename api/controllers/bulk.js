@@ -1,4 +1,5 @@
 const bulkService = require("../services/bulk");
+const { sendErrorResponse } = require("../utils/utils");
 
 exports.bulkData = async (req, res) => {
   try {
@@ -8,10 +9,10 @@ exports.bulkData = async (req, res) => {
     const plainData = fileBuffer.toString().split("\n");
 
     //Se envía al servicio los datos como un array
-    const response = await bulkService.bulkData(plainData);
-    res.json(response);
+    const result = await bulkService.bulkData(plainData);
+    sendResponse(res, 201, result);
   } catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    sendErrorResponse(res, 500, err);
   }
 };

@@ -1,11 +1,13 @@
 const { getStatistics } = require("../services/statistics");
+const { sendErrorResponse } = require("../utils/utils");
 
 exports.getStatistics = async (req, res) => {
   try {
     //No es necesario enviar datos al servicio
-    const response = await getStatistics();
-    res.json(response);
+    const result = await getStatistics();
+    sendResponse(res, 200, result);
   } catch (err) {
-    res.status(500).send(err);
+    console.error(err);
+    sendErrorResponse(res, 500, err);
   }
 };
