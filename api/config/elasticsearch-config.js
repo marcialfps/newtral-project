@@ -1,10 +1,10 @@
 const fs = require("fs");
 
 exports.elasticSearchConfig = {
-  node: "https://localhost:9200",
+  node: process.env.DB_URL,
   auth: {
-    username: "elastic",
-    password: "LDnu9Yo7RG_*QrLlHM9y",
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
   },
   tls: {
     ca: fs.readFileSync("./config/http_ca.crt"),
