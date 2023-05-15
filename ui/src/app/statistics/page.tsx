@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, Fragment } from "react";
-import RootLayout from "../layout";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableBody";
 import TableBody from "@mui/material/TableBody";
@@ -28,7 +27,7 @@ export default function Statistics() {
   }, []);
 
   return (
-    <RootLayout title="Statistics">
+    <section>
       <h1>Statistics</h1>
       {isLoading && <CircularProgress />}
 
@@ -41,11 +40,11 @@ export default function Statistics() {
               <TableHead>
                 <TableRow>
                   <TableCell>Nombre</TableCell>
-                  <TableCell>Partido</TableCell>
+                  <TableCell>Sueldo</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.top10.map((politician) => (
+                {data.top10.items.map((politician) => (
                   <TableRow key={politician._id}>
                     <TableCell>{politician._source.nombre}</TableCell>
                     <TableCell>
@@ -58,6 +57,6 @@ export default function Statistics() {
           </TableContainer>
         </Fragment>
       )}
-    </RootLayout>
+    </section>
   );
 }

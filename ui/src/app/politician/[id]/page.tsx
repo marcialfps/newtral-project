@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, Fragment } from "react";
-import RootLayout from "../../layout";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -60,7 +59,7 @@ export default function Politician({ params }: { params: { id: number } }) {
   };
 
   return (
-    <RootLayout title="Bulk data">
+    <section>
       {isLoading && <CircularProgress />}
 
       {data && (
@@ -105,6 +104,6 @@ export default function Politician({ params }: { params: { id: number } }) {
           />
         </Fragment>
       )}
-    </RootLayout>
+    </section>
   );
 }

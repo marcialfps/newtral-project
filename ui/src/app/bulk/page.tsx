@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, Fragment } from "react";
-import RootLayout from "../layout";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -28,7 +27,7 @@ export default function Bulk() {
   };
 
   return (
-    <RootLayout title="Bulk data">
+    <section>
       <h1>Bulk data</h1>
       {isLoading && <CircularProgress />}
 
@@ -48,6 +47,6 @@ export default function Bulk() {
           <Button onClick={sendData}>Upload</Button>
         </Fragment>
       )}
-    </RootLayout>
+    </section>
   );
 }

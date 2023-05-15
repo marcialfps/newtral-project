@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import RootLayout from "./layout";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableBody";
 import TableBody from "@mui/material/TableBody";
@@ -64,7 +63,7 @@ export default function Home() {
   };
 
   return (
-    <RootLayout title="Home">
+    <section>
       <h1>Home</h1>
 
       <TextField
@@ -128,6 +127,6 @@ export default function Home() {
           </Table>
         </TableContainer>
       )}
-    </RootLayout>
+    </section>
   );
 }
