@@ -38,7 +38,7 @@ const getAllDocuments = async (page, sort) => {
   if (sort) searchParams.sort = sort;
   const result = await client.search(searchParams);
 
-  return result.hits.hits;
+  return { total: result.hits.total.value, items: result.hits.hits };
 };
 
 //Se realiza una operacion search
@@ -57,7 +57,7 @@ const searchDocuments = async (filter, page) => {
 
   const result = await client.search(searchParams);
 
-  return result.hits.hits;
+  return { total: result.hits.total.value, items: result.hits.hits };
 };
 
 //Se realiza una operacion search pero con una agregacion
