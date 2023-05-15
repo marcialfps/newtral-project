@@ -30,13 +30,13 @@ const insertData = async (data) => {
 //El parametro sort opcional es utilizado para ordenar y obtener el top10 de sueldos
 const getAllDocuments = async (page, sort) => {
   console.debug("Get all documents in page ", page);
-  const sortParam = sort || { nombre: "desc" };
-  const result = await client.search({
+  const searchParams = {
     index: index,
-    sort: sortParam,
     size: sort ? 10 : itemsPerPage,
     from: page * itemsPerPage,
-  });
+  };
+  if (sort) searchParams.sort = sort;
+  const result = await client.search(searchParams);
 
   return result.hits.hits;
 };

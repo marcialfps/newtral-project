@@ -23,5 +23,5 @@ exports.getStatistics = async () => {
     sueldobase_sueldo: "desc",
   });
 
-  return { aggregation: resultsAggregation, top10: top10Sueldo };
+  return { ...resultsAggregation, top10: top10Sueldo };
 };
