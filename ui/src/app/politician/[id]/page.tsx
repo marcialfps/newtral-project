@@ -1,26 +1,14 @@
 "use client";
 
 import { useEffect, useState, Fragment } from "react";
+import {
+  getPolitician,
+  patchPolitician,
+  deletePolitician,
+} from "@/utils/api-connector";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-
-const getPolitician = (id) =>
-  fetch(`http://localhost:3000/politicians/${id}`).then((res) => res.json());
-
-const patchPolitician = (id, data) =>
-  fetch(`http://localhost:3000/politicians/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  }).then((res) => res.json());
-
-const deletePolitician = (id) =>
-  fetch(`http://localhost:3000/politicians/${id}`, {
-    method: "DELETE",
-  }).then((res) => res.json());
 
 export default function Politician({ params }: { params: { id: number } }) {
   const [data, setData] = useState(null);

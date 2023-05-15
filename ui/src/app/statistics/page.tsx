@@ -9,9 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
-
-const getStatistics = () =>
-  fetch("http://localhost:3000/statistics").then((res) => res.json());
+import { getStatistics } from "@/utils/api-connector";
 
 export default function Statistics() {
   const [data, setData] = useState(null);

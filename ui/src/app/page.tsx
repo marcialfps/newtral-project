@@ -15,21 +15,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Link from "next/link";
+import { getPoliticians, searchPoliticians } from "@/utils/api-connector";
 // import IconButton from "@mui/material/IconButton";
 // import FirstPageIcon from "@mui/icons-material/FirstPage";
 // import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 // import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 // import LastPageIcon from "@mui/icons-material/LastPage";
-
-const getPoliticians = (page) =>
-  fetch(`http://localhost:3000/politicians?page=${page}`).then((res) =>
-    res.json()
-  );
-
-const searchPoliticians = (filter) =>
-  fetch(`http://localhost:3000/politicians?${filter}`).then((res) =>
-    res.json()
-  );
 
 export default function Home() {
   const [data, setData] = useState(null);

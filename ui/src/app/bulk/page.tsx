@@ -3,18 +3,7 @@
 import { useState, Fragment } from "react";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-
-const bulkData = (file) => {
-  const formData = new FormData();
-  formData.append("file", file);
-  return fetch("http://localhost:3000/bulk", {
-    method: "POST",
-    // headers: {
-    //   "Content-Type": "application/form-data",
-    // },
-    body: formData,
-  }).then((res) => res.json());
-};
+import { bulkData } from "@/utils/api-connector";
 
 export default function Bulk() {
   const [file, setFile] = useState(null);
