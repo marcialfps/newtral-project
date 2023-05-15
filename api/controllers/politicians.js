@@ -9,9 +9,9 @@ exports.getPoliticians = async (req, res) => {
     let filter;
 
     //Asignamos el valor al filtro si alguno de los query params tiene valor
-    if (name) filter = { name };
-    else if (party) filter = { party };
-    else if (gender) filter = { gender };
+    if (name) filter = { nombre: name };
+    else if (party) filter = { partido_para_filtro: party };
+    else if (gender) filter = { genero: gender };
 
     //Enviamos al servicio el numero de pagina y el filtro
     const result = await politiciansService.getPoliticians(
