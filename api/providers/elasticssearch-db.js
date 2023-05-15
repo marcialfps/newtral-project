@@ -27,11 +27,14 @@ const insertData = async (data) => {
 
 //Se realiza una operacion search sin query para devolver todos los documentos
 //Se indica el numero de elementos a devolver con el size y la pagina con el from
-const getAllDocuments = async (page) => {
+//El parametro sort opcional es utilizado para ordenar y obtener el top10 de sueldos
+const getAllDocuments = async (page, sort) => {
   console.debug("Get all documents in page ", page);
+  const sortParam = sort || { nombre: "desc" };
   const result = await client.search({
     index: index,
-    size: itemsPerPage,
+    sort: sortParam,
+    size: sort ? 10 : itemsPerPage,
     from: page * itemsPerPage,
   });
 

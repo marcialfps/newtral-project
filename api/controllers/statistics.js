@@ -1,5 +1,5 @@
 const { getStatistics } = require("../services/statistics");
-const { sendErrorResponse } = require("../utils/utils");
+const { sendErrorResponse, sendResponse } = require("../utils/utils");
 
 exports.getStatistics = async (req, res) => {
   try {

@@ -13,17 +13,15 @@ exports.getStatistics = async () => {
         field: "sueldobase_sueldo",
       },
     },
-    top10: {
-      top_metrics: {
-        metrics: { field: "sueldobase_sueldo" },
-        sort: { sueldobase_sueldo: "desc" },
-        size: 10,
-      },
-    },
   };
 
   //Enviamos los parametros de agregacion a la BD
-  const results = await db.aggregateItems(aggregationParams);
+  const resultsAggregation = await db.aggregateItems(aggregationParams);
 
-  return results;
+  //Obtenemos el top10
+  const top10Sueldo = await db.getAllItems(0, {
+    sueldobase_sueldo: "desc",
+  });
+
+  return { aggregation: resultsAggregation, top10: top10Sueldo };
 };
