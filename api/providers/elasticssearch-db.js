@@ -32,7 +32,7 @@ const getAllDocuments = async (page) => {
   const result = await client.search({
     index: index,
     size: itemsPerPage,
-    from: page,
+    from: page * itemsPerPage,
   });
 
   return result.hits.hits;
@@ -46,7 +46,7 @@ const searchDocuments = async (filter, page) => {
     index: index,
     query: {},
     size: itemsPerPage,
-    from: page,
+    from: page * itemsPerPage,
   };
   //Si el filtro es por nombre se activa la busqueda fuzzy
   if (filter.name) searchParams.query.fuzzy = filter;

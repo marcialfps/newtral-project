@@ -1,5 +1,5 @@
 const bulkService = require("../services/bulk");
-const { sendErrorResponse } = require("../utils/utils");
+const { sendErrorResponse, sendResponse } = require("../utils/utils");
 
 exports.bulkData = async (req, res) => {
   try {
