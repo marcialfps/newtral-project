@@ -2,12 +2,12 @@
   "name": "newtral-api",
   "version": "0.0.1",
   "description": "API Rest para proyecto de Newtral",
+  "author": "marcialfps",
+  "license": "ISC",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "marcialfps",
-  "license": "ISC",
   "dependencies": {
     "@elastic/elasticsearch": "^8.7.0",
     "cors": "^2.8.5",

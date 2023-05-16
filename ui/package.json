@@ -1,6 +1,9 @@
 {
-  "name": "ui",
-  "version": "0.1.0",
+  "name": "newtral-ui",
+  "version": "0.0.1",
+  "description": "UI para proyecto de Newtral",
+  "author": "marcialfps",
+  "license": "ISC",
   "private": true,
   "scripts": {
     "dev": "next dev",
