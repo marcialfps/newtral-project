@@ -17,11 +17,16 @@ import Alert from "@mui/material/Alert";
 import { getStatistics } from "@/utils/api-connector";
 import { StatisticsResponseType } from "@/utils/types";
 
+//Página de estadísticas
+
 export default function Statistics() {
+  //Variable que contiene los datos de la API
   const [data, setData] = useState<StatisticsResponseType | null>(null);
+  //Variable para indicar la carga
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    //Al montarse el componente por primera vez se llama a la API
     const fetchData = async () => {
       const statistics = await getStatistics();
       setData(statistics);

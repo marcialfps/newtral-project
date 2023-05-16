@@ -22,15 +22,24 @@ import Link from "next/link";
 import { getPoliticians, searchPoliticians } from "@/utils/api-connector";
 import { ItemsResponseType } from "@/utils/types";
 
+//Página principal
+
 export default function Home() {
+  //Variable que contiene los datos de la API
   const [data, setData] = useState<ItemsResponseType | null>(null);
+
+  //Variable para indicar la carga
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  //Variable para obtener la página actual
   const [page, setPage] = useState<number>(0);
+
+  //Variables para cada uno de los filtros
   const [nameFilter, setNameFilter] = useState<string | null>(null);
   const [partyFilter, setPartyFilter] = useState<string | null>(null);
   const [genderFilter, setGenderFilter] = useState<string | null>(null);
 
   useEffect(() => {
+    //Al montarse el componente por primera vez o al cambiar de página se llama a la API
     const fetchData = async () => {
       const politicians = await getPoliticians(page);
       setData(politicians);
@@ -39,6 +48,7 @@ export default function Home() {
     fetchData();
   }, [page]);
 
+  //Al hacer click en el botón de buscar se setea la página a 0 y se llama a la API con el filtro
   const searchData = async () => {
     setIsLoading(true);
     setPage(0);
@@ -91,7 +101,7 @@ export default function Home() {
                 setGenderFilter(event.target.value);
               }}
             />
-            <Button onClick={searchData}>Search</Button>
+            <Button onClick={searchData}>Buscar</Button>
           </Stack>
         </CardContent>
       </Card>

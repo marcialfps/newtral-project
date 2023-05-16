@@ -1,3 +1,5 @@
+//Definición de los tipos, en este caso se define como son las respuestas esperadas de la API
+
 export type PoliticianType = {
     nombre?: string,
     partido?: string,

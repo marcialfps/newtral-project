@@ -10,17 +10,20 @@ import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
+//Layout principal del sitio
+//Para todas las páginas se muestra el AppBar para la navegación entre páginas
+//El contenido de todas las páginas se pasa como children del componente stack,
+//de esta manera el contenido se mostrará como una única columna
+
 export default function RootLayout({
-  title = "Newtral UI",
   children,
 }: {
-  title: string;
   children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <head>
-        <title>{title}</title>
+        <title>Newtral UI</title>
       </head>
       <body className={inter.className}>
         <AppBar position="static">

@@ -12,11 +12,17 @@ import Alert from "@mui/material/Alert";
 import { bulkData } from "@/utils/api-connector";
 import { ResponseType } from "@/utils/types";
 
+//Página de importar datos
+
 export default function Bulk() {
+  //Variable que contiene el fichero seleccionado
   const [file, setFile] = useState<File | null>(null);
+  //Variable para indicar la carga
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  //Variable que contiene la respuesta de la API
   const [response, setResponse] = useState<ResponseType | null>(null);
 
+  //Al hacer click en el botón de subir se llamada a la API enviando el fichero
   const sendData = async () => {
     setIsLoading(true);
     if (file) {
