@@ -8,15 +8,18 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
+import Alert from "@mui/material/Alert";
 import { bulkData } from "@/utils/api-connector";
 
 export default function Bulk() {
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState(null);
 
   const sendData = async () => {
     setIsLoading(true);
-    await bulkData(file);
+    const response = await bulkData(file);
+    setResponse(response);
     setIsLoading(false);
   };
 
@@ -26,7 +29,11 @@ export default function Bulk() {
         Importar datos
       </Typography>
 
-      {isLoading && <CircularProgress />}
+      {response?.error && (
+        <Stack sx={{ mt: 2 }} alignItems="center" justifyContent="center">
+          <Alert severity="error">{response.error}</Alert>
+        </Stack>
+      )}
 
       <Card>
         <CardContent>
@@ -37,17 +44,22 @@ export default function Bulk() {
             spacing={3}
             divider={file && <Divider orientation="horizontal" flexItem />}
           >
-            <Button component="label">
-              Seleccionar fichero
-              <input
-                type="file"
-                hidden
-                onChange={(event) => {
-                  setFile(event.target.files[0]);
-                }}
-              />
-            </Button>
-            {file && (
+            {isLoading ? (
+              <CircularProgress sx={{ alignSelf: "center" }} />
+            ) : (
+              <Button component="label">
+                Seleccionar fichero
+                <input
+                  type="file"
+                  hidden
+                  onChange={(event) => {
+                    setFile(event.target.files[0]);
+                  }}
+                />
+              </Button>
+            )}
+
+            {file && !isLoading && (
               <Stack
                 flexDirection="row"
                 alignItems="baseline"

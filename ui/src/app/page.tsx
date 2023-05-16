@@ -40,6 +40,7 @@ export default function Home() {
 
   const searchData = async () => {
     setIsLoading(true);
+    setPage(0);
     let filteredPoliticians;
     if (nameFilter) {
       filteredPoliticians = await searchPoliticians(`name=${nameFilter}`);
@@ -47,6 +48,8 @@ export default function Home() {
       filteredPoliticians = await searchPoliticians(`party=${partyFilter}`);
     } else if (genderFilter) {
       filteredPoliticians = await searchPoliticians(`gender=${genderFilter}`);
+    } else {
+      filteredPoliticians = await getPoliticians(0);
     }
     setIsLoading(false);
     if (filteredPoliticians) setData(filteredPoliticians);
@@ -92,11 +95,19 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      {/* {error && <Alert severity="error">{error.message}</Alert>} */}
+      {data?.error && (
+        <Stack sx={{ mt: 2 }} alignItems="center" justifyContent="center">
+          <Alert severity="error">{data.error}</Alert>
+        </Stack>
+      )}
 
-      {isLoading && <CircularProgress />}
+      {isLoading && (
+        <Stack sx={{ mt: 2 }} alignItems="center" justifyContent="center">
+          <CircularProgress />
+        </Stack>
+      )}
 
-      {data && (
+      {data?.items && (
         <TableContainer sx={{ mt: 2 }} component={Paper}>
           <Table>
             <TableHead sx={{ bgcolor: "#D1D1D1" }}>

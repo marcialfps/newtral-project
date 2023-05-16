@@ -6,7 +6,7 @@ exports.convertStringToDouble = (value) =>
 
 //Funcion para formatear las respuestas de error
 exports.sendErrorResponse = (res, code, error) => {
-  res.status(code).json({ message: error.message });
+  res.status(code).json({ error: error.message });
 };
 
 //Funcion para formatear las respuestas

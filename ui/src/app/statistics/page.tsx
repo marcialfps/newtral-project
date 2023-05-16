@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
+import Alert from "@mui/material/Alert";
 import { getStatistics } from "@/utils/api-connector";
 
 export default function Statistics() {
@@ -34,9 +35,19 @@ export default function Statistics() {
         Estadísticas
       </Typography>
 
-      {isLoading && <CircularProgress />}
+      {data?.error && (
+        <Stack alignItems="center" justifyContent="center">
+          <Alert severity="error">{data.error}</Alert>
+        </Stack>
+      )}
 
-      {data && (
+      {isLoading && (
+        <Stack alignItems="center" justifyContent="center">
+          <CircularProgress />
+        </Stack>
+      )}
+
+      {data && !data.error && (
         <Fragment>
           <Card>
             <CardContent>

@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
+import Alert from "@mui/material/Alert";
 
 export default function Politician({ params }: { params: { id: number } }) {
   const [data, setData] = useState(null);
@@ -58,13 +59,19 @@ export default function Politician({ params }: { params: { id: number } }) {
 
       <Card>
         <CardContent>
+          {data?.error && (
+            <Stack alignItems="center" justifyContent="center">
+              <Alert severity="error">{data.error}</Alert>
+            </Stack>
+          )}
+
           {isLoading && (
             <Stack alignItems="center" justifyContent="center">
               <CircularProgress />
             </Stack>
           )}
 
-          {data && (
+          {data?._source && (
             <Stack
               sx={{ m: 2 }}
               flexWrap="wrap"

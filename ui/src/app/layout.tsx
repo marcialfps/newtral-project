@@ -24,9 +24,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <AppBar position="static">
-          {/* <Toolbar> */}
           <Stack
-            sx={{ p: 1 }}
+            sx={{ p: 1, pr: 2, pl: 2 }}
             direction="row"
             justifyContent="space-between"
             alignItems="center"
@@ -35,12 +34,10 @@ export default function RootLayout({
               <Typography variant="h6">Newtral UI</Typography>
             </Link>
             <Stack direction="row" spacing={3}>
-              <Link href="/bulk">Bulk data</Link>
-              <Link href="/statistics">Statistics</Link>
+              <Link href="/bulk">Importar</Link>
+              <Link href="/statistics">Estadísticas</Link>
             </Stack>
           </Stack>
-
-          {/* </Toolbar> */}
         </AppBar>
         <Stack sx={{ m: 2 }}>{children}</Stack>
       </body>
