@@ -15,10 +15,11 @@ import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
 import { getStatistics } from "@/utils/api-connector";
+import { StatisticsResponseType } from "@/utils/types";
 
 export default function Statistics() {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<StatisticsResponseType | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,9 +59,11 @@ export default function Statistics() {
                 useFlexGap
                 spacing={3}
               >
-                <p>La media de los sueldos es de {data.average.value} euros.</p>
                 <p>
-                  La mediana de los sueldos es de {data.median.value} euros.
+                  La media de los sueldos es de {data.average?.value} euros.
+                </p>
+                <p>
+                  La mediana de los sueldos es de {data.median?.value} euros.
                 </p>
               </Stack>
             </CardContent>
@@ -75,11 +78,11 @@ export default function Statistics() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.top10.items.map((politician) => (
+                {data.top10?.items.map((politician) => (
                   <TableRow key={politician._id}>
-                    <TableCell>{politician._source.nombre}</TableCell>
+                    <TableCell>{politician._source?.nombre}</TableCell>
                     <TableCell align="right">
-                      {politician._source.sueldobase_sueldo}
+                      {politician._source?.sueldobase_sueldo}
                     </TableCell>
                   </TableRow>
                 ))}

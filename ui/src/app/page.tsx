@@ -20,14 +20,15 @@ import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import { getPoliticians, searchPoliticians } from "@/utils/api-connector";
+import { ItemsResponseType } from "@/utils/types";
 
 export default function Home() {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(0);
-  const [nameFilter, setNameFilter] = useState(null);
-  const [partyFilter, setPartyFilter] = useState(null);
-  const [genderFilter, setGenderFilter] = useState(null);
+  const [data, setData] = useState<ItemsResponseType | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(0);
+  const [nameFilter, setNameFilter] = useState<string | null>(null);
+  const [partyFilter, setPartyFilter] = useState<string | null>(null);
+  const [genderFilter, setGenderFilter] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,8 +121,8 @@ export default function Home() {
             <TableBody>
               {data.items.map((politician) => (
                 <TableRow key={politician._id}>
-                  <TableCell>{politician._source.nombre}</TableCell>
-                  <TableCell>{politician._source.partido}</TableCell>
+                  <TableCell>{politician._source?.nombre}</TableCell>
+                  <TableCell>{politician._source?.partido}</TableCell>
                   <TableCell align="right">
                     <Link href={`/politician/${politician._id}`}>
                       Ver más...
@@ -134,9 +135,9 @@ export default function Home() {
               <TableRow>
                 <TablePagination
                   colSpan={3}
-                  count={data.total}
+                  count={data.total || 0}
                   rowsPerPage={5}
-                  rowsPerPageOptions={-1}
+                  rowsPerPageOptions={[5]}
                   page={page}
                   onPageChange={() => setPage(page + 1)}
                 />

@@ -10,16 +10,19 @@ import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Alert from "@mui/material/Alert";
 import { bulkData } from "@/utils/api-connector";
+import { ResponseType } from "@/utils/types";
 
 export default function Bulk() {
-  const [file, setFile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [response, setResponse] = useState<ResponseType | null>(null);
 
   const sendData = async () => {
     setIsLoading(true);
-    const response = await bulkData(file);
-    setResponse(response);
+    if (file) {
+      const response = await bulkData(file);
+      setResponse(response);
+    }
     setIsLoading(false);
   };
 
@@ -53,7 +56,7 @@ export default function Bulk() {
                   type="file"
                   hidden
                   onChange={(event) => {
-                    setFile(event.target.files[0]);
+                    setFile(event.target.files ? event.target.files[0] : null);
                   }}
                 />
               </Button>
