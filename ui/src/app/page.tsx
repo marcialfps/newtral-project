@@ -14,13 +14,12 @@ import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Stack from "@mui/material/Stack";
 import Link from "next/link";
 import { getPoliticians, searchPoliticians } from "@/utils/api-connector";
-// import IconButton from "@mui/material/IconButton";
-// import FirstPageIcon from "@mui/icons-material/FirstPage";
-// import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-// import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-// import LastPageIcon from "@mui/icons-material/LastPage";
 
 export default function Home() {
   const [data, setData] = useState(null);
@@ -55,39 +54,56 @@ export default function Home() {
 
   return (
     <section>
-      <h1>Home</h1>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Inicio
+      </Typography>
 
-      <TextField
-        label="Nombre"
-        onChange={(event) => {
-          setNameFilter(event.target.value);
-        }}
-      />
-      <TextField
-        label="Partido"
-        onChange={(event) => {
-          setPartyFilter(event.target.value);
-        }}
-      />
-      <TextField
-        label="Género"
-        onChange={(event) => {
-          setGenderFilter(event.target.value);
-        }}
-      />
-      <Button onClick={searchData}>Search</Button>
+      <Card>
+        <CardContent>
+          <Stack
+            sx={{ m: 2 }}
+            flexDirection="row"
+            flexWrap="wrap"
+            alignItems="center"
+            justifyContent="center"
+            useFlexGap
+            spacing={3}
+          >
+            <TextField
+              label="Nombre"
+              onChange={(event) => {
+                setNameFilter(event.target.value);
+              }}
+            />
+            <TextField
+              label="Partido"
+              onChange={(event) => {
+                setPartyFilter(event.target.value);
+              }}
+            />
+            <TextField
+              label="Género"
+              onChange={(event) => {
+                setGenderFilter(event.target.value);
+              }}
+            />
+            <Button onClick={searchData}>Search</Button>
+          </Stack>
+        </CardContent>
+      </Card>
 
       {/* {error && <Alert severity="error">{error.message}</Alert>} */}
 
       {isLoading && <CircularProgress />}
 
       {data && (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-            <TableHead>
+        <TableContainer sx={{ mt: 2 }} component={Paper}>
+          <Table>
+            <TableHead sx={{ bgcolor: "#D1D1D1" }}>
               <TableRow>
                 <TableCell>Nombre</TableCell>
                 <TableCell>Partido</TableCell>
+                <TableCell align="right">Opciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -95,7 +111,7 @@ export default function Home() {
                 <TableRow key={politician._id}>
                   <TableCell>{politician._source.nombre}</TableCell>
                   <TableCell>{politician._source.partido}</TableCell>
-                  <TableCell style={{ width: 160 }} align="right">
+                  <TableCell align="right">
                     <Link href={`/politician/${politician._id}`}>
                       Ver más...
                     </Link>

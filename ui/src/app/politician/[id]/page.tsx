@@ -9,6 +9,10 @@ import {
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Stack from "@mui/material/Stack";
 
 export default function Politician({ params }: { params: { id: number } }) {
   const [data, setData] = useState(null);
@@ -48,50 +52,54 @@ export default function Politician({ params }: { params: { id: number } }) {
 
   return (
     <section>
-      {isLoading && <CircularProgress />}
+      <Typography variant="h4" component="h1" gutterBottom>
+        Información
+      </Typography>
 
-      {data && (
-        <Fragment>
-          <h1>Politician {params.id}</h1>
-
-          {isEditing ? (
-            <Fragment>
-              <Button onClick={() => setIsEditing(false)}>Cancel</Button>
-              <Button onClick={saveData}>Save</Button>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <Button color="error" onClick={deleteData}>
-                Delete
-              </Button>
-              <Button onClick={() => setIsEditing(true)}>Edit</Button>
-            </Fragment>
+      <Card>
+        <CardContent>
+          {isLoading && (
+            <Stack alignItems="center" justifyContent="center">
+              <CircularProgress />
+            </Stack>
           )}
-          {Object.keys(data._source).map((property) => (
-            <TextField
-              label={property}
-              disabled={!isEditing}
-              defaultValue={data._source[property]}
-              onChange={(event) => addNewData(property, event.target.value)}
-            />
-          ))}
-          <TextField
-            label="Nombre"
-            disabled={!isEditing}
-            defaultValue="Marcial F Parrilla"
-          />
-          <TextField
-            label="Partido"
-            disabled={!isEditing}
-            defaultValue="PSOE"
-          />
-          <TextField
-            label="Salario"
-            disabled={!isEditing}
-            defaultValue="30.000"
-          />
-        </Fragment>
-      )}
+
+          {data && (
+            <Stack
+              sx={{ m: 2 }}
+              flexWrap="wrap"
+              alignItems="stretch"
+              useFlexGap
+              spacing={3}
+            >
+              {isEditing ? (
+                <Stack flexDirection="row" justifyContent="space-between">
+                  <Button color="secondary" onClick={() => setIsEditing(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={saveData}>Save</Button>
+                </Stack>
+              ) : (
+                <Stack flexDirection="row" justifyContent="space-between">
+                  <Button color="error" onClick={deleteData}>
+                    Delete
+                  </Button>
+                  <Button onClick={() => setIsEditing(true)}>Edit</Button>
+                </Stack>
+              )}
+              {Object.keys(data._source).map((property) => (
+                <TextField
+                  label={property}
+                  disabled={!isEditing}
+                  defaultValue={data._source[property]}
+                  onChange={(event) => addNewData(property, event.target.value)}
+                  fullWidth
+                />
+              ))}
+            </Stack>
+          )}
+        </CardContent>
+      </Card>
     </section>
   );
 }

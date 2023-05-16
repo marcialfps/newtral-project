@@ -4,7 +4,7 @@ import * as React from "react";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
@@ -24,15 +24,25 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <AppBar position="static">
-          <Toolbar>
+          {/* <Toolbar> */}
+          <Stack
+            sx={{ p: 1 }}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Link href="/">
               <Typography variant="h6">Newtral UI</Typography>
             </Link>
-            <Link href="/bulk">Bulk data</Link>
-            <Link href="/statistics">Statistics</Link>
-          </Toolbar>
+            <Stack direction="row" spacing={3}>
+              <Link href="/bulk">Bulk data</Link>
+              <Link href="/statistics">Statistics</Link>
+            </Stack>
+          </Stack>
+
+          {/* </Toolbar> */}
         </AppBar>
-        {children}
+        <Stack sx={{ m: 2 }}>{children}</Stack>
       </body>
     </html>
   );
