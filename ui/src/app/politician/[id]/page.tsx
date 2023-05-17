@@ -41,7 +41,7 @@ export default function Politician({ params }: { params: { id: number } }) {
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [params]);
 
   //Al hacer click en el botón de guardar se envía a la API los valores
   //A continuación se actualizan los datos del político
@@ -117,6 +117,7 @@ export default function Politician({ params }: { params: { id: number } }) {
               )}
               {Object.keys(data._source).map((property) => (
                 <TextField
+                  key={property}
                   label={property}
                   disabled={!isEditing}
                   defaultValue={data._source ? data._source[property] : ""}
