@@ -14,10 +14,10 @@ jobs:
       - name: Install api dependencies and run tests
         run: |
           cd ./api
-          npm install --omit=dev
+          npm install
           npm run test
       - name: Install ui dependencies and run tests
         run: |
           cd ./ui
-          npm install --omit=dev
+          npm install
           npm run test
