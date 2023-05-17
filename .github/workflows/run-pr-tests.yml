@@ -1,4 +1,4 @@
-name: Deploy Website
+name: Run PR tests
 
 on:
   pull_request:
