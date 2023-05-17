@@ -1,0 +1,367 @@
+openapi: 3.0.3
+info:
+  title: API Newtral
+  description: API implementada para el proyecto de Newtral.
+  contact:
+    email: marcialfco@live.com
+  version: 0.0.1
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: bulk
+    description: Importa datos de un fichero CSV a la base de datos
+  - name: politicians
+    description: Operaciones sobre los datos de los políticos
+  - name: statistics
+    description: Devuelve datos estadísticos
+paths:
+  /bulk:
+    post:
+      tags:
+        - bulk
+      summary: Importa CSV a la base de datos
+      description: Importa datos de un fichero CSV a la base de datos
+      operationId: bulkData
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/form-data:
+            schema:
+              $ref: '#/components/schemas/Bulk'
+        required: true
+      responses:
+        '201':
+          description: Operación correcta
+        '500':
+          description: Error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /politicians:
+    get:
+      tags:
+        - politicians
+      summary: Devuelve el listado de políticos
+      description: Devuelve el listado de políticos paginado
+      operationId: findPetsByStatus
+      parameters:
+        - name: page
+          in: query
+          description: Número de página
+          required: false
+          explode: true
+          schema:
+            type: number
+            default: 0
+        - name: name
+          in: query
+          description: Nombre del político
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: party
+          in: query
+          description: Partido al que pertenece el político
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: gender
+          in: query
+          description: Género del político
+          required: false
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación correcta
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PoliticiansResponse'          
+        '500':
+          description: Error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /politicians/{politicianId}:
+    get:
+      tags:
+        - politicians
+      summary: Obtener político por id
+      description: Devuelve un único político
+      operationId: getPoliticianById
+      parameters:
+        - name: politicianId
+          in: path
+          description: ID del político a obtener
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación correcta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliticianResponse'
+        '500':
+          description: Error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    patch:
+      tags:
+        - politicians
+      summary: Actualiza los datos de un político
+      description: ''
+      operationId: updatePetWithForm
+      parameters:
+        - name: politicianId
+          in: path
+          description: ID del político a modificar
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Atributos del político que se van a modificar
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Politician'
+        required: true
+      responses:
+        '200':
+          description: Operación correcta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliticianPatchResponse'
+        '500':
+          description: Error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags:
+        - politicians
+      summary: Elimina un político
+      description: Elimina un político
+      operationId: deletePolitician
+      parameters:
+        - name: politicianId
+          in: path
+          description: ID del político a eliminar
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación correcta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliticianPatchResponse'
+        '500':
+          description: Error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /statistics:
+    get:
+      tags:
+        - statistics
+      summary: Devuelve datos estadísticos
+      description: Devuelve datos estadísticos y el top 10 de salarios
+      operationId: getStatistics
+      responses:
+        '200':
+          description: Operación correcta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '500':
+          description: Error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+components:
+  schemas:
+    Bulk:
+      type: object
+      properties:
+          file: 
+            type: string
+            example: "FileBuffer"
+      xml:
+        name: bulk
+    Politician:
+      type: object
+      properties:
+          nombre: 
+            type: string
+            example: "Marcial Francisco Parrilla Socas"
+          partido: 
+            type: string
+            example: "Partido Socialista Obrero Español"
+          partido_para_filtro:
+            type: string
+            example: "PSOE"
+          genero: 
+            type: string
+            example: "Hombre"
+          cargo_para_filtro: 
+            type: string
+            example: "Alcalde"
+          cargo: 
+            type: string
+            example: "Alcalde"
+          institucion: 
+            type: string
+            example: "Ayuntamiento de Teguise"
+          ccaa: 
+            type: string
+            example: "Canarias"
+          sueldobase_sueldo: 
+            type: number
+            example: 31000.13
+          otrasdietaseindemnizaciones_sueldo: 
+            type: number
+          retribucionmensual: 
+            type: number
+            example: 1000
+          retribucionanual:
+            type: number
+            example: 0
+          observaciones: 
+            type: string
+            example: "Sin dedicación"
+      xml:
+        name: politician
+    PoliticianResponse:
+      type: object
+      properties:
+          _error: 
+            type: string
+            example: "Invalid politician ID"
+          _index: 
+            type: string
+            example: "politiciansIndex"
+          _id:
+            type: string
+            example: "12345ABCDEF"
+          _version: 
+            type: number
+            example: 1
+          _seq_no: 
+            type: number
+            example: 0
+          _primary_term: 
+            type: number
+            example: 2
+          found: 
+            type: boolean
+          _score: 
+            type: number
+            example: 0.76
+          _source:
+            $ref: '#/components/schemas/Politician'
+      xml:
+        name: politicianResponse
+    PoliticianPatchResponse:
+      type: object
+      properties:
+          _error: 
+            type: string
+            example: "Invalid politician ID"
+          _index: 
+            type: string
+            example: "politiciansIndex"
+          _id:
+            type: string
+            example: "12345ABCDEF"
+          _version: 
+            type: number
+            example: 1
+          result: 
+            type: string
+            example: "updated"
+          _shards: 
+            type: object
+          _seq_no: 
+            type: number
+            example: 4097
+          _primary_term: 
+            type: number
+            example: 2
+      xml:
+        name: politicianPatchResponse
+    PoliticiansResponse:
+      type: object
+      properties:
+          error: 
+            type: string
+            example: "Invalid politician ID"
+          total: 
+            type: number
+            example: 1456
+          items: 
+            type: array
+            items: 
+              $ref: '#/components/schemas/PoliticianResponse'
+      xml:
+        name: politiciansResponse
+    ValueObject:
+      type: object
+      properties:
+          value: 
+            type: number
+            example: 10
+      xml:
+        name: valueObject
+    PoliticiansItemsObject:
+      type: object
+      properties:
+          total: 
+            type: number
+            example: 1456
+          items: 
+            type: array
+            items: 
+              $ref: '#/components/schemas/PoliticianResponse'
+      xml:
+        name: politiciansItemsObject
+    StatisticsResponse:
+      type: object
+      properties:
+          error: 
+            type: string
+            example: "Internal error"
+          average: 
+            $ref: '#/components/schemas/ValueObject'
+          median: 
+            $ref: '#/components/schemas/ValueObject'
+          top10:
+            items: 
+              $ref: '#/components/schemas/PoliticiansItemsObject'
+      xml:
+        name: statisticsResponse
+    ApiResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Invalid politician ID"
+      xml:
+        name: '##default'
